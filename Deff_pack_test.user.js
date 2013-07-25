@@ -62,14 +62,14 @@ $("#deffsettings").click(function() {
 			settings['Offopp'].push($(this).val());
 		});
 		var kritiek = 0;
-		var infoff = settings['Offopp'][2] * 40 + settings['Offopp'][10] * 100 + settings['Offopp'][9] * 2; //als hij nog iets anders gebruikt is hij mm, niet zo slim...........
-		var cavoff = settings['Offopp'][6] * 130 + settings['Offopp'][8] * 150;
-		var boogoff = settings['Offopp'][7] *120;
+		var infoff = settings['Offopp'][2] * 40 + settings['Offopp'][9] * 100 + settings['Offopp'][8] * 2; //als hij nog iets anders gebruikt is hij mm, niet zo slim...........
+		var cavoff = settings['Offopp'][5] * 130 + settings['Offopp'][7] * 150;
+		var boogoff = settings['Offopp'][6] *120;
 		var totoff = infoff + cavoff + boogoff; 
 		settings['infquota'] = infoff/totoff;
 		var cavquota = cavoff/totoff;
 		var boogquota = boogoff/totoff;
-		var max = settings['Offopp'][9] * 2 / 45;
+		var max = settings['Offopp'][8] * 2 / 45;
 		var maxratio = 0.5/max;
 		var maxratiostuk = maxratio/3;
 		// settings['infquota'] * X + cavquota * y + boogquota * Z; 3 Variabelen: Vergelijking is niet op te lossen. Creatief zijn dus.
