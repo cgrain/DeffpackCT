@@ -1,1 +1,14 @@
 Deffpack CT. voor TW. 
+TODO:
+-Stack opslaan in LS. als 3: definf,defcav,defboog. misschien manieren verzinnen om in te korten. Ook opslaan of er off aanwezig is.
+-Optiescherm geen Pop-up laten zijn.
+-functie schrijven: function(stack, aantal incomings) { 
+select opties (wanneer is iets een goede stack?)
+	rekenen, rekenen, rekenen.
+return defdorpen extra nodig}
+bij incomings knop die volgende doet:
+	- sorteren op doeldorp met somlijn ertussen. 
+	- function van hierboven uitvoeren.
+	- checken of er off/edels aanwezig zijn. zo ja vermelden. 
+
+Tja, verzin het maar :p misschien wat extra opties? 
