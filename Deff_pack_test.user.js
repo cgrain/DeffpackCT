@@ -64,8 +64,23 @@ $("#deffsettings").click(function() {
 		var kritiek = 0;
 		var infoff = settings['Offopp'][2] * 40 + settings['Offopp'][10] * 100 + settings['Offopp'][9] * 2; //als hij nog iets anders gebruikt is hij mm, niet zo slim...........
 		var cavoff = settings['Offopp'][6] * 130 + settings['Offopp'][8] * 150;
-		var totoff = infoff + cavoff; 
+		var boogoff = settings['Offopp'][7] *120;
+		var totoff = infoff + cavoff + boogoff; 
 		settings['infquota'] = infoff/totoff;
+		var cavquota = cavoff/totoff;
+		var boogquota = boogoff/totoff;
+		var max = settings['Offopp'][9] * 2 / 45;
+		var maxratio = 0.5/max;
+		var maxratiostuk = maxratio/3;
+		// settings['infquota'] * X + cavquota * y + boogquota * Z; 3 Variabelen: Vergelijking is niet op te lossen. Creatief zijn dus.
+		// settings['infquota' *X < maxratiostuk
+		var x = maxratiostuk/settings['infquota'];
+		var y = maxratiostuk/cavquota;
+		var z = maxratiostuk/boogquota;
+		// X = (att/def) ^1.5 X^(2/3) = (totoff/def(inf))
+		settings['definf'] = totoff/Math.pow(x,(2/3));
+		settings['cavinf'] = totoff/Math.pow(y,(2/3));
+		settings['booginf']= totoff/Math.pow(z,(2/3));
 		settings['mobdef']= [];
 		definput.each(function(){
 			settings['mobdef'].push($(this).val());
