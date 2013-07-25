@@ -5,7 +5,7 @@ TODO:
 -functie schrijven: function(stack, aantal incomings) { 
 select opties (wanneer is iets een goede stack?)
 	rekenen, rekenen, rekenen.
-return defdorpen extra nodig}
+return defdorpen extra nodig} GESCHREVEN
 bij incomings knop die volgende doet:
 	- sorteren op doeldorp met somlijn ertussen. 
 	- function van hierboven uitvoeren.
