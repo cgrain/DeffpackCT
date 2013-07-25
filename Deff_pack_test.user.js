@@ -90,6 +90,49 @@ $("#deffsettings").click(function() {
 	});
 });
 
+//all Functions.
+function stackinc (inc, stack, moraal) {
+	switch (settings['Stackbeoordeling']) {
+	case "muur":
+		var infoff = settings['Offopp'][2] * 40 + settings['Offopp'][9] * 100 + settings['Offopp'][8] * 2; //als hij nog iets anders gebruikt is hij mm, niet zo slim...........
+		var cavoff = settings['Offopp'][5] * 130 + settings['Offopp'][7] * 150;
+		var boogoff = settings['Offopp'][6] *120;
+		var totoff = infoff + cavoff + boogoff;
+		var max = settings['Offopp'][8] * 2 / 45;		
+		var total = [0,0];
+		var wall = [20,10,10];
+		var Ratio = [0,0,0,0];
+		var n = 0;
+		for (var i =0;i<inc;i++) {
+			n++;	
+			wall[2] = 20 + 50* wall[1];
+			var multD = Math.pow(1.037, wall[1]);
+			for (var j = 0; j< 3; j++) {
+				if (totoff > stack[j]) {
+				return 7;//Minsténs! correct getal nog nodig. 
+				}
+				else if (totoff < stack[j]) {
+					Ratio[j] = Math.pow(totoff/stack[j], 1.5);
+				}
+			}
+			if(totoff ==0) {totoff=1;}
+			Ratio[3] = (infoff * Ratio[0] + cavoff * Ratio[1] + boogoff * Ratio[2])/totoff;
+			if (n ==1) { var Rationis = Ratio[3] * stack[0];} 
+			stack[0] = stack[0] * Ratio[3];
+			stack[1] = stack[1] * Ratio[3];
+			stack[2] = stack[2] * Ratio[3];// Dit zou korter moeten kunnen. 
+			if (Ratio[3] * max >= 0.5) {
+			return (inc-i)/5;
+			}
+		}
+		return 0;
+		break;
+	}
+	
+}
+
+
+
 if (game_data.mode == "incomings") {
 
 var cols = 1;
