@@ -29,6 +29,7 @@
     
 var win = window.main ? window.main : window,
 gd = win.game_data;
+//Settings.
 var settings = {};
 if (localStorage['CTPack-Settings'] === undefined) { 
 		settings['Stackbeoordeling'] = "muur";
@@ -89,6 +90,11 @@ $("#deffsettings").click(function() {
 		$("#Deffsettings").remove();
 	});
 });
+// All global declarations. 
+var unitStat = [[10, 15, 45, 20], [25, 50, 15, 40], [40, 10, 5, 10], [15, 50, 40, 5], [0, 2, 1, 2], _
+[130, 30, 40, 30], [120, 40, 30, 50], [150, 200, 80, 180], [2, 20, 50, 20], [100, 100, 50, 100], _
+[150, 250, 400, 150], [30, 100, 50, 100]]
+
 
 //all Functions.
    function getTimeFromTW(str) {
@@ -199,9 +205,7 @@ function stackinc (inc, stack, moraal) {
 	for (i=0;i<3;i++) {
 		for (j=0;j<11;j++)
 		{
-			stacktel[i] = stacktel[i] + stack[j] * 0//unitstat[j][i]
-		
-		
+			stacktel[i] = stacktel[i] + stack[j] unitstat[j][i + 1];
 		}
 	}
 	switch (settings['Stackbeoordeling']) {
