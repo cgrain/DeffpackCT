@@ -91,7 +91,119 @@ $("#deffsettings").click(function() {
 });
 
 //all Functions.
+   function getTimeFromTW(str) {
+		// NOTE: huh this actually returns the current date
+		// with some new properties with the "str" time
+		//17:51:31
+		var timeParts = str.split(":");
+		var seconds = timeParts[2];
+		var val = {};
+		val.hours = parseInt(timeParts[0], 10);
+		val.minutes = parseInt(timeParts[1], 10);
+		if (seconds.length > 2) {
+			var temp = seconds.split(".");
+			val.seconds = parseInt(temp[0], 10);
+			val.milliseconds = parseInt(temp[1], 10);
+		} 
+		else {
+			val.seconds = parseInt(seconds, 10);
+		}
+		val.totalSecs = val.seconds + val.minutes * 60 + val.hours * 3600;
+		return val;
+	}
+	function getDateFromTW(str, isTimeOnly) {
+		//13.02.11 17:51:31
+		var timeParts, seconds;
+		if (isTimeOnly) {
+			timeParts = str.split(":");
+			seconds = timeParts[2];
+			var val = new Date();
+			val.setHours(timeParts[0]);
+			val.setMinutes(timeParts[1]);
+			if (seconds.length > 2) {
+				var temp = seconds.split(".");
+				val.setSeconds(temp[0]);
+				val.setMilliseconds(temp[1]);
+			} else {
+				val.setSeconds(seconds);
+			}
+			return val;
+		} 
+		else {
+			var parts = str.split(" ");
+			var dateParts = parts[0].split(".");
+			timeParts = parts[1].split(":");
+			seconds = timeParts[2];
+			var millis = 0;
+			if (seconds.length > 2) {
+				var temp = seconds.split(".");
+				seconds = temp[0];
+				millis = temp[1];
+			} if (dateParts[2].length == 2) {
+				dateParts[2] = (new Date().getFullYear() + '').substr(0, 2) + dateParts[2];
+			}
+
+			return new Date(dateParts[2], (dateParts[1] - 1), dateParts[0], timeParts[0], timeParts[1], seconds, millis);
+		}
+	}
+	
+	function getlooptijd(x1,y1, x2, y2, unit, aankomsttijd) {
+		var dist = {};
+		
+		dist.fields = Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
+		
+		var speed = v;
+		dist.tijdsduur = speed* dist.fields;
+		dist.minuuttijdsduur = Math.floor(dist.tijdsduur % 60);
+		dist.uurtijdsduur = Math.floor(dist.tijdsduur/ 60);
+		var minuten = Math.floor(dist.tijdsduur);
+		var seconden = (dist.tijdsduur -minuten) * 60;
+		dist.secondentijdsduur = Math.round(seconden);
+		dist.aankomsttijd = getDateFromTW(aankomsttijd, false);
+		// VERZENDTIJD:
+		var remainder = 0;
+		if ((dist.aankomsttijd.getSeconds()-dist.secondentijdsduur -remainder) >= 0) 
+		{
+		//bugalert(dist.aankomsttijd.getHours());
+		dist.verzendseconde = dist.aankomsttijd.getSeconds()-dist.secondentijdsduur;
+		//bugalert(dist.verzenduur);
+		}
+		else {
+		remainder = 1;
+		dist.verzendseconde = dist.aankomsttijd.getSeconds()-dist.secondentijdsduur + 60;
+		}
+		if ((dist.aankomsttijd.getMinutes()-dist.minuuttijdsduur -remainder) >= 0) 
+		{
+		//bugalert(dist.aankomsttijd.getHours());
+		dist.verzendminuut = dist.aankomsttijd.getMinutes()-dist.minuuttijdsduur;
+		}
+		else {
+		remainder = 1;
+		dist.verzendminuut = dist.aankomsttijd.getMinutes()-dist.minuuttijdsduur + 60;
+		}
+		
+		if ((dist.aankomsttijd.getHours()-dist.uurtijdsduur -remainder) >= 0) 
+		{
+		//bugalert(dist.aankomsttijd.getHours());
+		dist.verzenduur = dist.aankomsttijd.getHours()-dist.uurtijdsduur;
+		//bugalert(dist.verzenduur);
+		}
+		else {
+		remainder = 1;
+		dist.verzenduur = dist.aankomsttijd.getHours()-dist.uurtijdsduur + 24;
+		}
+		//bugalert(dist.verzenduur + ":" +dist.verzendminuut+ ":"+ dist.verzendseconde); 
+		return dist;
+	}
 function stackinc (inc, stack, moraal) {
+	for (i=0;i<3;i++) {
+		for (j=0;j<11;j++)
+		{
+			stacktel[i] = stacktel[i] + stack[j] * 0//unitstat[j][i]
+		
+		
+		}
+	}
 	switch (settings['Stackbeoordeling']) {
 	case "muur":
 		var infoff = settings['Offopp'][2] * 40 + settings['Offopp'][9] * 100 + settings['Offopp'][8] * 2; //als hij nog iets anders gebruikt is hij mm, niet zo slim...........
@@ -108,31 +220,80 @@ function stackinc (inc, stack, moraal) {
 			wall[2] = 20 + 50* wall[1];
 			var multD = Math.pow(1.037, wall[1]);
 			for (var j = 0; j< 3; j++) {
-				if (totoff > stack[j]) {
-				return 7;//Minsténs! correct getal nog nodig. 
+				if (totoff > stacktel[j]) {
+				return 7;//DIT KLOPT NIET. DIT MOET EMPIRISCH HERSTELD WORDEN. 
 				}
-				else if (totoff < stack[j]) {
-					Ratio[j] = Math.pow(totoff/stack[j], 1.5);
+				else if (totoff < stacktel[j]) {
+					Ratio[j] = Math.pow(totoff/stacktel[j], 1.5);
 				}
 			}
 			if(totoff ==0) {totoff=1;}
 			Ratio[3] = (infoff * Ratio[0] + cavoff * Ratio[1] + boogoff * Ratio[2])/totoff;
-			if (n ==1) { var Rationis = Ratio[3] * stack[0];} 
-			stack[0] = stack[0] * Ratio[3];
-			stack[1] = stack[1] * Ratio[3];
-			stack[2] = stack[2] * Ratio[3];// Dit zou korter moeten kunnen. 
+			if (n ==1) { var Rationis = Ratio[3] * stacktel[0];} 
+			stacktel[0] = stacktel[0] * Ratio[3];
+			stacktel[1] = stacktel[1] * Ratio[3];
+			stacktel[2] = stacktel[2] * Ratio[3];// Dit zou korter moeten kunnen. 
 			if (Ratio[3] * max >= 0.5) {
-			return (inc-i)/5;
+			return (inc-i)/5 * Math.Round(Ratio[3] * max);//DIT KLOPT NIET. DIT MOET EMPIRISCH HERSTELD WORDEN. 
 			}
 		}
 		return 0;
 		break;
+	case "bouwtijd"
+		var infoff = settings['Offopp'][2] * 40 + settings['Offopp'][9] * 100 + settings['Offopp'][8] * 2; //als hij nog iets anders gebruikt is hij mm, niet zo slim...........
+		var cavoff = settings['Offopp'][5] * 130 + settings['Offopp'][7] * 150;
+		var boogoff = settings['Offopp'][6] *120;
+		var totoff = infoff + cavoff + boogoff;
+		var max = settings['Offopp'][8] * 2 / 45;		
+		var total = [0,0];
+		var wall = [20,10,10];
+		var Ratio = [0,0,0,0];
+		var n = 0;
+		for (var i =0;i<inc;i++) {
+			n++;	
+			wall[2] = 20 + 50* wall[1];
+			var multD = Math.pow(1.037, wall[1]);
+			for (var j = 0; j< 3; j++) {
+				if (totoff > stacktel[j]) {
+				return 7;//DIT KLOPT NIET. DIT MOET EMPIRISCH HERSTELD WORDEN. 
+				}
+				else if (totoff < stacktel[j]) {
+					Ratio[j] = Math.pow(totoff/stacktel[j], 1.5);
+				}
+			}
+			if(totoff ==0) {totoff=1;}
+			Ratio[3] = (infoff * Ratio[0] + cavoff * Ratio[1] + boogoff * Ratio[2])/totoff;
+			if (n ==1) { var Rationis = Ratio[3] * stacktel[0];} 
+			stacktel[0] = stacktel[0] * Ratio[3];
+			stacktel[1] = stacktel[1] * Ratio[3];
+			stacktel[2] = stackteltel[2] * Ratio[3];// Dit zou korter moeten kunnen. 
+		}
+		break;
 	}
 	
 }
-
-
-
+		if(localStorage.getItem("AR_Unit_Config") === null) {
+        var URL_UnitInfo = "http://" + game_data.world + ".tribalwars.nl/interface.php?func=get_unit_info";
+        $.ajax({
+            url: URL_UnitInfo,
+            success: function (UnitResult) {
+                var AR_Unit_Config = {
+                    'Speer/Bijl': parseFloat($(UnitResult).find("spear").find("speed").text()),
+                    'Zwaard': parseFloat($(UnitResult).find("sword").find("speed").text()),
+                    'Boog':parseFloat($(UnitResult).find("archer").find("speed").text()),
+                    'Scouts':parseFloat($(UnitResult).find("spy").find("speed").text()),
+                    'LC':parseFloat($(UnitResult).find("light").find("speed").text()),
+                    'Bereden Boog': parseFloat($(UnitResult).find("marcher").find("speed").text()),
+                    'ZC':parseFloat($(UnitResult).find("heavy").find("speed").text()),
+                    'Ram/Kata': parseFloat($(UnitResult).find("ram").find("speed").text()),
+                    'snob':parseFloat($(UnitResult).find("snob").find("speed").text())
+                    
+                }
+                localStorage.setItem('AR_Unit_Config', JSON.stringify(AR_Unit_Config))
+            }
+        });
+        }
+        var AR_Unit_Config = JSON.parse(localStorage.getItem("AR_Unit_Config"));
 if (game_data.mode == "incomings") {
 
 var cols = 1;
@@ -557,9 +718,76 @@ $('.aankomstsort').click(function(e) {
                     })();
 					
 	});
-	
+$("#incomings_table tr:first th:first").append("<input type='button' id='AR_massatagger' value='Aanvallen taggen'>");
+        $("#AR_massatagger").click(function(){
+			$("#incomings_table tr.nowrap").each(function(){
+				if($(this).find("input[id*='editInput']").val().match(/Aanval/i)) {
+					var own_village = $(this).html().match(/\d{3}\|\d{3}/)[0]
+					var other_village = $(this).find("a[href*='&screen=info_village']").html().match(/\d{3}\|\d{3}/),
+					f = own_village.toString().split("|"),
+					t = other_village.toString().split("|"),
+					fields = Math.sqrt(Math.pow(parseInt(f[0])-parseInt(t[0]),2)+Math.pow(parseInt(f[1])-parseInt(t[1]),2));
+					var times = [];
+					$.each(AR_Unit_Config, function(k,v){
+						if(v != null) {
+						times.push(k + " - " + (fields*(v/60)))
+						}
+					})
+					var remaining_time = $(this).find(".timer").text().split(":");
+					var remaining_time_decimal = (parseInt(remaining_time[0]) + ((parseInt(remaining_time[1])+(parseInt(remaining_time[2])/60))/60));
+					var possible_times = [];
+					for(i=0;i<times.length;i++){
+						var w = times[i].toString().split(" - ");
+						if(parseFloat(w[1]) > remaining_time_decimal) {
+							var temp = w[1] + " - " + w[0]
+							possible_times.push(temp);
+						}
+					}
+					possible_times.sort(function(a, b) {
+						function j(a) {
+							var w2 = a.toString().split(" - "); 
+							var u = 0;
+							u += parseFloat(w2[0]);
+							return u
+						}
+						return j(a) - j(b); 
+					});
+					$(this).find("input[id*='editInput']").val(possible_times[0].split(" - ")[1]).next("input").click();
+				}
+			})
+        })
 	} // einde deel voor de incomings pagina
-	
+else if (location.href.indexOf('screen=info_command') > -1) {
+			alert("Tja");
+			var infotable = $("#content_value").find("table:eq(0)");
+			var herkomstdorp = $(infotable).find("tr:contains('Herkomst')").next().find("td:eq(1)");
+			var doeldorp = $(infotable).find("tr:contains('Doel')").next().find("td:eq(1)");
+			herkomstcoord = herkomstdorp.text().match(/(\d+)\|(\d+)/);
+			doelcoord = doeldorp.text().match(/(\d+)\|(\d+)/);		
+			var aankomsttijd = $(infotable).find("tr:contains('Aankomst:')").find("td:eq(1)").text();
+			var aankomstin = $(infotable).find("tr:contains('Aankomst in:')").find("td:eq(1)").text().split(":");
+			var looptijden = [];
+			$.each(AR_Unit_Config, function(k,v){
+				if(v != null) {
+					var looptijd = getlooptijd(herkomstcoord[1], herkomstcoord[2], doelcoord[1], doelcoord[2], v, aankomsttijd);
+					if ((aankomstin[1] == looptijd.uurtijdsduur && aankomstin[2] == looptijd.minuuttijdsduur && aankomstin[3] > looptijd.secondentijdsduur)|| (aankomstin[1] == looptijd.uurtijdsduur && aankomstin[2] > looptijd.minuuttijdsduur) || (aankomstin[1] == looptijd.uurtijdsduur)) {
+						looptijden.push(v +" - " + k);
+						
+					}
+				}
+			});
+			looptijden.sort(function(a, b) {
+				function j(a) {
+					var w2 = a.toString().split(" - "); 
+					var u = 0;
+					u += parseFloat(w2[0]);
+					return u
+				}
+				return j(a) - j(b); 
+			});
+			$("input[id*='editInput']").val(looptijden[0].split(" - ")[1]).next("input").click();
+
+		}
 else if (game_data.mode == "units") {
 //OPSLAAN ALS: LIJST MET OFF in dorp LIJST met dorpen zonder stack( minder dan 0.95) 
 //LIJST met 1 dorp stack (<1.95) ENZ tot 7 dorpen stack. daarna totale verdedigingskracht opslaan tegen clear ingevoerd. 
