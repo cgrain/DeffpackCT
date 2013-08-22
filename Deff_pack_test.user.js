@@ -29,7 +29,87 @@
     
 var win = window.main ? window.main : window,
 gd = win.game_data;
+var world_data = {};
+		var current_page = "";
+		// world config: global game settings
+		var world_config = {
+			hasMilitia: false,
+			nightbonus: {
+				active: false,
+				from: 0, 
+				till: 0
+				},
+			smithyLevels: true,
+			hasChurch: false,
+			hasArchers: false,
+			hasKnight: false,
+			speed: 1,
+			unitSpeed: 1,
+			farmLimit: 0,
+			minFake: 0,
+			hasMinFakeLimit: false,
+			coins: false,
+			maxNobleWalkingTime: 999
+		};
+		if (localStorage['CTworldconfig'] !== undefined) {
+			world_config = JSON.parse(localStorage['CTworldconfig']);
+			
+		} 
+		else {
+			// load new world through tw API
+			
+				function world_config_setter_unit(configBag, unitInfoXml) {
+					configBag.hasMilitia = $("config militia", unitInfoXml).length !== 0;
+				}
+				
+				function world_config_setter(configBag, infoXml) {
+					configBag.nightbonus = {
+						active: $("night active", infoXml).text() === "1",
+						from: parseInt($("night start_hour", infoXml).text(), 10),
+						till: parseInt($("night end_hour", infoXml).text(), 10)
+						};
+					configBag.smithyLevels = $("game tech", infoXml).text() === "1" || $("game tech", infoXml).text() === "0";
+					configBag.hasChurch = $("game church", infoXml).text() !== "0";
+					configBag.hasArchers = $("game archer", infoXml).text() !== "0";
+					configBag.hasKnight = $("game knight", infoXml).text() !== "0";
+					configBag.speed = parseFloat($("config speed", infoXml).text());
+					configBag.unitSpeed = parseFloat($("config unit_speed", infoXml).text());
+					configBag.farmLimit = parseInt($("game farm_limit", infoXml).text(), 10);
+					configBag.minFake = parseInt($("game fake_limit", infoXml).text(), 10) / 100;
+					configBag.hasMinFakeLimit = configBag.minFake > 0;
+					configBag.coins = $("snob gold", infoXml).text() === "1";
+					configBag.maxNobleWalkingTime = parseInt($("snob max_dist", infoXml).text(), 10) * configBag.speed * configBag.unitSpeed;
+				}
+
+				function world_config_getter(world) {
+					// world nl: http://nl16.tribalwars.nl/
+					// world de: http://de90.die-staemme.de/
+					if (typeof world === 'undefined') world = '';
+					
+					var world_config = {};
+					$.ajax({
+						url: world + "interface.php?func=get_unit_info",
+						async: false,
+						success: function(xml) {
+							world_config_setter_unit(world_config, xml);
+						}
+					});
+				
+					$.ajax({
+						url: world + "interface.php?func=get_config",
+						async: false,
+						success: function(xml) {
+							world_config_setter(world_config, xml);
+						}
+					});
+					return world_config;
+				}
+				
+				world_config = world_config_getter();
+			localStorage["CTworldconfig"]=JSON.stringify(world_config);
+		}
 //Settings.
+
 var settings = {};
 if (localStorage['CTPack-Settings'] === undefined) { 
 		settings['Stackbeoordeling'] = "muur";
@@ -208,14 +288,8 @@ var unitStat = [[10, 15, 45, 20], [25, 50, 15, 40], [40, 10, 5, 10], [15, 50, 40
 		for (var j=0;j<11;j++)
 		{
 			var x = i + 1;
-			//alert(typeof unitStat[j][x]);
-			//alert(typeof stack[j]);
-			//alert(typeof stacktel[i]);
-			
 			stacktel[i] = (stacktel[i] + stack[j] * unitStat[j][x]) * 1;
-			//alert(i + "x" + j + "--" + stacktel[i]);
 		}
-		//alert(stacktel[i]);
 	}
 	
 	switch (settings['Stackbeoordeling']) {
@@ -235,7 +309,7 @@ var unitStat = [[10, 15, 45, 20], [25, 50, 15, 40], [40, 10, 5, 10], [15, 50, 40
 				//alert("dit is de " + n + "de aanval"); 
 			wall[2] = 20 + 50* wall[1];
 			var multD = Math.pow(1.037, wall[1]);
-			
+
 			//alert("de verdediging heeft een muurbonus van: " + multD);
 			for (var j = 0; j< 3; j++) {
 				stacktel[j] *= multD;
@@ -440,17 +514,20 @@ Uitwerking:
 - Output in somlijn: x incs - y extra dorpen def nodig. (igv 0 extra def: groene tekst met: gestackt!)
 -Doorzoeken tot einde tabel. 
 */
-//var stackalledorpen = JSON.parse(localstorage["CTstack"]);
+var stackalledorpen = JSON.parse(localStorage["CTstack"]);
 var rijen = $(".optel");
 rijen.each(function(index) {
 var inkomende = $(this).text();
 alert(inkomende);
 var dorp = $(this).prev().html().match(/\((\d+)\|(\d+)\)/);
 alert(dorp);
-//var naamLS = dorp[1] + "|" + dorp[2];
-//var stackie (zie onder waarom niet gewoon stack, we veranderen dat wss eerder! = stackalledorpen[naamLS];
-// if (stackie == 'undefined') { output = in RODE LETTERS!: stack onbekend. break;
-var stack = stackinc(inkomende, [7000,7000,0,7000, 0, 0, 0, 0,0,0,0],100);
+var naamLS = dorp[1] + "|" + dorp[2];
+var stackie  = stackalledorpen[naamLS];//(zie onder waarom niet gewoon stack, we veranderen dat wss eerder!
+alert(stackie);
+if (stackie === undefined) {
+$(this).text("Stack onbekend");
+return true;}
+var stack = stackinc(inkomende, stackie,100);
 $(this).text(inkomende + " incs --" + stack + " def nodig.!!!");
 }); 
 var stack = stackinc(7, [7000,7000,0,7000, 0, 0, 0, 0,0,0,0],100);
@@ -858,12 +935,42 @@ else if (location.href.indexOf('screen=info_command') > -1) {
 
 		}
 else if (game_data.mode == "units") {
-//OPSLAAN ALS: LIJST MET OFF in dorp LIJST met dorpen zonder stack( minder dan 0.95) 
-//LIJST met 1 dorp stack (<1.95) ENZ tot 7 dorpen stack. daarna totale verdedigingskracht opslaan tegen clear ingevoerd. 
+// Stack opslaan? Gaat veel tijd kosten, om ze allemaal langs te gaan. Hoe dit aan te pakken? Idee: Enkel dorpen onder aanval te doen, tenzij er op een knop gedrukt wordt. Op dat moment wordt alles ingeladen. Werkt natuurlijk enkel alleen bij 'alle' en bij 'verdediging'. 
+if (location.href.indexOf('type=complete') > -1 || location.href.indexOf('type=support_detail') > -1 || location.href.indexOf('type=there') > -1 || location.href.indexOf('type') == -1) {
+var rows = $("tr:contains('in het dorp')", "#units_table");
+//rows.css( "color", "red" );
+//localStorage["CTstack"] = "{}";
+var stackie = JSON.parse(localStorage["CTstack"]);
+if (stackie === undefined) { stackie = {};} // ZOU JIJ DIT WILLEN OPLOSSEN? VOOR 1e keer mensen weet je wel, dan wordt dat gewoon veel makkelijker :)
+//alert("problemen? niet hier.");
+rows.each(function(i) {
+if (location.href.indexOf('type=complete') > -1 || location.href.indexOf('type') == -1) { 
+var dorpscoord = $(this).prev().html(); 
+} 
+else { 
+var dorpscoord = $(this).html(); 
+}
+//alert(dorpscoord);
+//alert("hoi pipeloi!");
+if (/command\/attack\.png\?901ab/.test(dorpscoord)) {
+alert("onder aanval!");
+var coords = dorpscoord.match(/\d+\|\d+/);
+//alert(coords);
+var dorpstacktext = $(this).html().match(/((\d+))\</g);
+//alert(dorpstacktext);
+if (world_config.hasArchers) { 
+var dorpstack = [dorpstacktext[0].match(/\d+/)[0],dorpstacktext[1].match(/\d+/)[0],dorpstacktext[2].match(/\d+/)[0],dorpstacktext[3].match(/\d+/)[0],dorpstacktext[4].match(/\d+/)[0],dorpstacktext[5].match(/\d+/)[0],dorpstacktext[6].match(/\d+/)[0],dorpstacktext[7].match(/\d+/)[0],dorpstacktext[8].match(/\d+/)[0],dorpstacktext[9].match(/\d+/)[0],dorpstacktext[10].match(/\d+/)[0]];// nog iets verzinnen voor ridders!! 
+}else {
+var dorpstack = [dorpstacktext[0].match(/\d+/)[0],dorpstacktext[1].match(/\d+/)[0],dorpstacktext[2].match(/\d+/)[0],dorpstacktext[3].match(/\d+/)[0],dorpstacktext[4].match(/\d+/)[0],dorpstacktext[5].match(/\d+/)[0],dorpstacktext[6].match(/\d+/)[0],dorpstacktext[7].match(/\d+/)[0],dorpstacktext[8].match(/\d+/)[0]]; 
+}
+stackie[coords] = dorpstack;
+//alert(stackie[coords]);
+}
 
 
+});localStorage["CTstack"] = JSON.stringify(stackie);
+//alert(localStorage["CTstack"]);
 
-
-
+}
 }	
 });
