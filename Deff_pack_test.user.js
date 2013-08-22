@@ -46,7 +46,7 @@ $("#deffsettings").click(function() {
 	a.style.cssText = "background-color:#ecd6ad;border:2px solid #7d510f;z-index:5;top:130px;left:40%;position:absolute;padding-top:7px;padding-left:7px;width:400px;border-radius:7px;box-shadow:0 0 50px 15px #000000;";
 	document.body.appendChild(a);
 	var menu =  '<h2 style="text-align: center;">settings Deff-Pack</h2><table><tr><td>';
-	menu += 'Stack:<select><option name="muur">Muur niet zakken!</option><option name="bouwtijd">hij moet langer bouwen dan ik</option></select></td></tr>';
+	menu += 'Stack:<select><option name="muur">Muur niet zakken! MEER OPTIES VOLGEN IN VOLGENDE VERSIE! </option></select></td></tr>';
 	menu += '<tr><td>Normale Clear:</td></tr><tr><td><table id="Offopp" class="vis"><tr><th width="50"><img src="http://cdn2.tribalwars.net/graphic/unit/unit_spear.png?48b3b" title="Speervechter" alt="" class="" /></th><th width="50"><img src="http://cdn2.tribalwars.net/graphic/unit/unit_sword.png?b389d" title="Zwaardvechter" alt="" class="" /></th><th width="50"><img src="http://cdn2.tribalwars.net/graphic/unit/unit_axe.png?51d94" title="Bijlstrijder" alt="" class="" /></th><th width="50"><img src="http://cdn2.tribalwars.net/graphic/unit/unit_archer.png?db2c3" title="Boogschutter" alt="" class="" /></th><th width="50"><img src="http://cdn2.tribalwars.net/graphic/unit/unit_spy.png?eb866" title="Verkenner" alt="" class="" /></th><th width="50"><img src="http://cdn2.tribalwars.net/graphic/unit/unit_light.png?2d86d" title="Lichte cavalerie" alt="" class="" /></th><th width="50"><img src="http://cdn2.tribalwars.net/graphic/unit/unit_marcher.png?ad3be" title="Bereden boogschutter" alt="" class="" /></th><th width="50"><img src="http://cdn2.tribalwars.net/graphic/unit/unit_heavy.png?a83c9" title="Zware cavalerie" alt="" class="" /></th><th width="50"><img src="http://cdn2.tribalwars.net/graphic/unit/unit_ram.png?2003e" title="Ram" alt="" class="" /></th><th width="50"><img src="http://cdn2.tribalwars.net/graphic/unit/unit_catapult.png?5659c" title="Katapult" alt="" class="" /></th><th width="50"><img src="http://cdn2.tribalwars.net/graphic/unit/unit_snob.png?0019c" title="Edelman" alt="" class="" /></th></tr><tr><td><input style="width:25px"></td><td><input style="width:25px"></td><td><input style="width:25px"></td><td><input style="width:25px"></td><td><input style="width:25px"></td><td><input style="width:25px"></td><td><input style="width:25px"></td><td "><input style="width:25px"></td><td><input style="width:25px"></td><td><input style="width:25px"></td><td><input style="width:25px"></td></tr></td></tr></table></td></tr><tr><td>Mobiel! Def-dorp:</td></tr><tr><td><table id="mobdef" class="vis"><tr><th width="50"><img src="http://cdn2.tribalwars.net/graphic/unit/unit_spear.png?48b3b" title="Speervechter" alt="" class="" /></th><th width="50"><img src="http://cdn2.tribalwars.net/graphic/unit/unit_sword.png?b389d" title="Zwaardvechter" alt="" class="" /></th><th width="50"><img src="http://cdn2.tribalwars.net/graphic/unit/unit_axe.png?51d94" title="Bijlstrijder" alt="" class="" /></th><th width="50"><img src="http://cdn2.tribalwars.net/graphic/unit/unit_archer.png?db2c3" title="Boogschutter" alt="" class="" /></th><th width="50"><img src="http://cdn2.tribalwars.net/graphic/unit/unit_spy.png?eb866" title="Verkenner" alt="" class="" /></th><th width="50"><img src="http://cdn2.tribalwars.net/graphic/unit/unit_light.png?2d86d" title="Lichte cavalerie" alt="" class="" /></th><th width="50"><img src="http://cdn2.tribalwars.net/graphic/unit/unit_marcher.png?ad3be" title="Bereden boogschutter" alt="" class="" /></th><th width="50"><img src="http://cdn2.tribalwars.net/graphic/unit/unit_heavy.png?a83c9" title="Zware cavalerie" alt="" class="" /></th><th width="50"><img src="http://cdn2.tribalwars.net/graphic/unit/unit_ram.png?2003e" title="Ram" alt="" class="" /></th><th width="50"><img src="http://cdn2.tribalwars.net/graphic/unit/unit_catapult.png?5659c" title="Katapult" alt="" class="" /></th><th width="50"><img src="http://cdn2.tribalwars.net/graphic/unit/unit_snob.png?0019c" title="Edelman" alt="" class="" /></th></tr><tr><td><input style="width:25px"></td><td><input style="width:25px"></td><td><input style="width:25px"></td><td><input style="width:25px"></td><td><input style="width:25px"></td><td><input style="width:25px"></td><td><input style="width:25px"></td><td "><input style="width:25px"></td><td><input style="width:25px"></td><td><input style="width:25px"></td><td><input style="width:25px"></td></tr></td></tr></table>';
 	menu += '<tr><td><a id="Deffsluiten" href="javascript:void(0)">sluiten</a></tr></td></table>';
 	a.innerHTML = menu;
@@ -91,9 +91,7 @@ $("#deffsettings").click(function() {
 	});
 });
 // All global declarations. 
-var unitStat = [[10, 15, 45, 20], [25, 50, 15, 40], [40, 10, 5, 10], [15, 50, 40, 5], [0, 2, 1, 2], _
-[130, 30, 40, 30], [120, 40, 30, 50], [150, 200, 80, 180], [2, 20, 50, 20], [100, 100, 50, 100], _
-[150, 250, 400, 150], [30, 100, 50, 100]]
+var unitStat = [[10, 15, 45, 20], [25, 50, 15, 40], [40, 10, 5, 10], [15, 50, 40, 5], [0, 2, 1, 2], [130, 30, 40, 30], [120, 40, 30, 50], [150, 200, 80, 180], [2, 20, 50, 20], [100, 100, 50, 100],[150, 250, 400, 150], [30, 100, 50, 100]]
 
 
 //all Functions.
@@ -117,6 +115,7 @@ var unitStat = [[10, 15, 45, 20], [25, 50, 15, 40], [40, 10, 5, 10], [15, 50, 40
 		val.totalSecs = val.seconds + val.minutes * 60 + val.hours * 3600;
 		return val;
 	}
+	
 	function getDateFromTW(str, isTimeOnly) {
 		//13.02.11 17:51:31
 		var timeParts, seconds;
@@ -201,49 +200,78 @@ var unitStat = [[10, 15, 45, 20], [25, 50, 15, 40], [40, 10, 5, 10], [15, 50, 40
 		//bugalert(dist.verzenduur + ":" +dist.verzendminuut+ ":"+ dist.verzendseconde); 
 		return dist;
 	}
-function stackinc (inc, stack, moraal) {
-	for (i=0;i<3;i++) {
-		for (j=0;j<11;j++)
+
+	function stackinc (inc, stack, moraal) {// stack is een array van alle troepen in defdorp aanwezig. inkomende supports wel/niet meerekenen is nog een open vraag. dat mag jij besluiten. 
+	var stacktel = [];
+	for (var i=0;i<3;i++) {
+		stacktel[i] = 0;
+		for (var j=0;j<11;j++)
 		{
-			stacktel[i] = stacktel[i] + stack[j] unitstat[j][i + 1];
+			var x = i + 1;
+			//alert(typeof unitStat[j][x]);
+			//alert(typeof stack[j]);
+			//alert(typeof stacktel[i]);
+			
+			stacktel[i] = (stacktel[i] + stack[j] * unitStat[j][x]) * 1;
+			//alert(i + "x" + j + "--" + stacktel[i]);
 		}
+		//alert(stacktel[i]);
 	}
+	
 	switch (settings['Stackbeoordeling']) {
 	case "muur":
 		var infoff = settings['Offopp'][2] * 40 + settings['Offopp'][9] * 100 + settings['Offopp'][8] * 2; //als hij nog iets anders gebruikt is hij mm, niet zo slim...........
 		var cavoff = settings['Offopp'][5] * 130 + settings['Offopp'][7] * 150;
 		var boogoff = settings['Offopp'][6] *120;
 		var totoff = infoff + cavoff + boogoff;
+		//alert(totoff);
 		var max = settings['Offopp'][8] * 2 / 45;		
 		var total = [0,0];
 		var wall = [20,10,10];
 		var Ratio = [0,0,0,0];
 		var n = 0;
 		for (var i =0;i<inc;i++) {
-			n++;	
+			n++;
+				//alert("dit is de " + n + "de aanval"); 
 			wall[2] = 20 + 50* wall[1];
 			var multD = Math.pow(1.037, wall[1]);
+			
+			//alert("de verdediging heeft een muurbonus van: " + multD);
 			for (var j = 0; j< 3; j++) {
+				stacktel[j] *= multD;
+				//alert("klaar voor de aanval?");
+				//alert(totoff + "--" + stacktel[j]);
 				if (totoff > stacktel[j]) {
-				return 7;//DIT KLOPT NIET. DIT MOET EMPIRISCH HERSTELD WORDEN. 
+				alert("aanvaller wint?"); 
+				Ratio[j] = 1; 
+				}
+				else if (totoff == stacktel[j]) { 
+					alert("dit is theoretisch zeer onwaarschijnlijk. "); // Zie hier hetzelfde als hierboven. 
 				}
 				else if (totoff < stacktel[j]) {
+				alert("verdediging wint"); 
 					Ratio[j] = Math.pow(totoff/stacktel[j], 1.5);
 				}
 			}
 			if(totoff ==0) {totoff=1;}
-			Ratio[3] = (infoff * Ratio[0] + cavoff * Ratio[1] + boogoff * Ratio[2])/totoff;
-			if (n ==1) { var Rationis = Ratio[3] * stacktel[0];} 
+			Ratio[3] = (infoff * Ratio[0] + cavoff * Ratio[1] + boogoff * Ratio[2])/totoff;// Zoveel gaat er van ieder dood. van elke soort troep gaat hetzelfde percentage dood. 
+			if (Ratio[3] ==1) {
+			return 7;//DIT KLOPT NIET. DIT MOET EMPIRISCH HERSTELD WORDEN. we kunnen ook een string terugkeren, met de zin: je troepen worden compleet weggevaagd. dit is altijd bij de eerste clear, want als het er meer zijn dan wordt al eerder uitgerekend dat de muur het eerder begeeft. en dan stopt de loop, als het goed is. ;
+			}
+			if (n ==1) { var Rationis = Ratio[3] * stacktel[0];}
+		
 			stacktel[0] = stacktel[0] * Ratio[3];
 			stacktel[1] = stacktel[1] * Ratio[3];
 			stacktel[2] = stacktel[2] * Ratio[3];// Dit zou korter moeten kunnen. 
-			if (Ratio[3] * max >= 0.5) {
-			return (inc-i)/5 * Math.Round(Ratio[3] * max);//DIT KLOPT NIET. DIT MOET EMPIRISCH HERSTELD WORDEN. 
+			var muurzakt = Ratio[3] * max;
+			if (muurzakt >= 0.5) { // de muur zakt minstens 1 level. 
+			alert("muurtje gaat down, muurtje gaat down");
+			return (inc-i)/5 * Math.round(Ratio[3] * max);//DIT KLOPT NIET. DIT MOET EMPIRISCH HERSTELD/Uitgebreid worden. maar dat heb ik nog niet verzonnen. :( Het is echter wel een goede vuistregel. WORDEN. 
 			}
 		}
 		return 0;
 		break;
-	case "bouwtijd"
+	/*case "bouwtijd"
 		var infoff = settings['Offopp'][2] * 40 + settings['Offopp'][9] * 100 + settings['Offopp'][8] * 2; //als hij nog iets anders gebruikt is hij mm, niet zo slim...........
 		var cavoff = settings['Offopp'][5] * 130 + settings['Offopp'][7] * 150;
 		var boogoff = settings['Offopp'][6] *120;
@@ -272,7 +300,7 @@ function stackinc (inc, stack, moraal) {
 			stacktel[1] = stacktel[1] * Ratio[3];
 			stacktel[2] = stackteltel[2] * Ratio[3];// Dit zou korter moeten kunnen. 
 		}
-		break;
+		break;*/
 	}
 	
 }
@@ -307,7 +335,7 @@ $("table#incomings_table tr:first th").each(function() {
 if(cols.length < 4) {
     cols = 6;
 }
-$("table#incomings_table tr:first").before("<tr><th colspan='" + cols + "'><input type='button' id='OS_list' value='OS-Lijst maken'><input type='button' id='ShowAttackID' value='aanval IDs tonen'></th></tr>");
+$("table#incomings_table tr:first").before("<tr><th colspan='" + cols + "'><input type='button' id='OS_list' value='OS-Lijst maken'><input type='button' id='stackbeoordeling' value='stack???!'><input type='button' id='ShowAttackID' value='aanval IDs tonen'></th></tr>");
 $("th:contains('Doel')").append("X/Continent:<a href=\"#\" class=\"xsort\" id=\"xasc\">(&and;)</a>&nbsp<a href=\"#\" class=\"xsort\" id=\"xdesc\">(&or;)</a>Y:<a href=\"#\" class=\"ysort\" id=\"yasc\">(&and;)</a>&nbsp<a href=\"#\" class=\"ysort\" id=\"ydesc\">(&or;)</a>");
 $("th:contains('Herkomst')").append("X/Continent:<a href=\"#\" class=\"xhsort\" id=\"xhasc\">(&and;)</a>&nbsp<a href=\"#\" class=\"xhsort\" id=\"xhdesc\">(&or;)</a>Y:<a href=\"#\" class=\"yhsort\" id=\"yhasc\">(&and;)</a>&nbsp<a href=\"#\" class=\"yhsort\" id=\"yhdesc\">(&or;)</a>");
 $("th:contains('Speler')").append("<a href=\"#\" class=\"spsort\" id=\"spasc\">(&and;)</a>&nbsp<a href=\"#\" class=\"spsort\" id=\"spdesc\">(&or;)</a>");
@@ -397,7 +425,37 @@ var doel = {};
 
 // einde deel popup/OS-lijst maken
 //voor de incomings een kolom IDs maken na het klikken op de button:
-
+$("#stackbeoordeling").click(function() { 
+//Dit moet proper. eerst sorteren op doeldorp, enz. 
+xsort("xasc");
+//for each dorp in list: tel de incs, vraag de stack op (uit LS, uit ajax? ) en bereken/haal de moraal op. Niet zo moeilijk wss.
+/*
+Uitwerking:
+-Zoeken tot hij somlijn vindt. 
+- Inc's ophalen uit somlijn. 
+- dorp uit bevel erboven opzoeken. ($(this).parent.parent.enz.before.find("td:eq(xx)");
+- stack ophalen doormiddel van LS (ajax zal wel niet in orde zijn :S). 
+- moraal uitrekenen als het niet in LS staat dmv ajax of moraal gewoon negeren (later toevoegen!). 
+- stackinc met gegevens uitvoeren. 
+- Output in somlijn: x incs - y extra dorpen def nodig. (igv 0 extra def: groene tekst met: gestackt!)
+-Doorzoeken tot einde tabel. 
+*/
+//var stackalledorpen = JSON.parse(localstorage["CTstack"]);
+var rijen = $(".optel");
+rijen.each(function(index) {
+var inkomende = $(this).text();
+alert(inkomende);
+var dorp = $(this).prev().html().match(/\((\d+)\|(\d+)\)/);
+alert(dorp);
+//var naamLS = dorp[1] + "|" + dorp[2];
+//var stackie (zie onder waarom niet gewoon stack, we veranderen dat wss eerder! = stackalledorpen[naamLS];
+// if (stackie == 'undefined') { output = in RODE LETTERS!: stack onbekend. break;
+var stack = stackinc(inkomende, [7000,7000,0,7000, 0, 0, 0, 0,0,0,0],100);
+$(this).text(inkomende + " incs --" + stack + " def nodig.!!!");
+}); 
+var stack = stackinc(7, [7000,7000,0,7000, 0, 0, 0, 0,0,0,0],100);
+alert(stack);
+}); 
 $("#ShowAttackID").click(function(){
 $("#incomings_table th:contains('Bevel')").before('<th width="120">IDs&nbsp<a href="#" class="IDsort" id="IDasc">(&and;)</a>&nbsp<a href="#" class="IDsort" id="IDdesc">(&or;)</a></th>'); 
 //hieronder IDs voor de rijen zetten:
@@ -432,9 +490,7 @@ $('.IDsort').click(function(e) {
 	});
 
 })	
-
-$('.xsort').click(function(e) {
-    var sortDir = $(this).attr("id");
+function xsort(sortDir){
 				function j(a) {
                         var temp = $(a).text().match(/(\d{3})\|(\d{3})/);
 						if (temp != null) {
@@ -497,6 +553,15 @@ $('.xsort').click(function(e) {
 							}
 						}
 					});
+
+
+
+
+}
+$('.xsort').click(function(e) {// Deze functie moet blijven! desnoods onzichtbaar, desnoods als gewone functie, maar Stackbeoordelaar moet het kunnen aanroepen!
+    alert("Er gaat hier iets goed fout!");
+	var sortDir = $(this).attr("id");
+	xsort(sortDir);
 	});	
 $('.ysort').click(function(e) {
     var sortDir = $(this).attr("id");
