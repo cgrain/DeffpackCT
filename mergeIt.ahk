@@ -1,5 +1,5 @@
 inputFile := "startct.user.js"
-savePath := "C:\"
+savePath := ""
 saveAs := "DeffpackCT.user.js"
 
 FileEncoding, UTF-8-RAW
