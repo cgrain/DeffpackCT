@@ -1,0 +1,28 @@
+// ==UserScript==
+  
+// @name            GM Deff-pack
+  
+// @author          Tjeerdo & Cgrain
+// @version         1.2 
+// @description     Deff-pack
+// @include         http://nl*.tribalwars.nl/game.php?*
+// @exclude         http://nl*.tribalwars.nl/game.php?*screen=am_farm*
+  
+/* Functionaliteiten:
+ * Verbeterde OS-aanvrager
+ * (Massa-)tagger
+ * Stack-beoordelaar
+ * op doel filteren
+ * ID tagger (momenteel alleen voor nieuwere werelden, dus vanaf W21 werkt die denk ik)
+ * bij verzamelplaats --> aanvragen filteren op boerderijplaatsen ;)
+ * Fakezoeker
+ * Laatste aanvallen per dorp markeren
+ * Timers stoppen
+ */
+  
+/* TO-DO List:
+ * ID tagger voor oude werelden, is makkelijk te maken als de id tagger voor de nieuwe werelden er is.
+ * vanalles :p
+ */
+  
+// ==/UserScript==
