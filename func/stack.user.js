@@ -9,6 +9,7 @@ function stackincboog (inc, stack, moraal, muur) {
 		var total = [0,0];
 		var wall = [muur,0.5*muur,0.5*muur];
 		var Ratio = [0,0,0,0];
+		var n = 0;
 	for (var i=0;i<3;i++) {
 		stacktel[i] = 0;
 		for (var j=0;j<11;j++)
@@ -120,8 +121,11 @@ function stackincboog (inc, stack, moraal, muur) {
 		return 0;
 		break;
 	case "percentage":
-		for (var i =0;i<inc;i++) {
+		//debug(inc);
+		for (i=0;i<inc;i++) {
+			//debug("Tja");
 			n++;
+			
 			//debug("dit is de " + n + "de aanval"); 
 			wall[2] = 20 + 50* wall[1];
 			var multD = Math.pow(1.037, wall[1]);
@@ -144,6 +148,7 @@ function stackincboog (inc, stack, moraal, muur) {
 				}
 			}
 			if(totoff ==0) {totoff=1;}
+			
 			Ratio[3] = (infoff * Ratio[0] + cavoff * Ratio[1] + boogoff * Ratio[2])/totoff;// Zoveel gaat er van ieder dood. van elke soort troep gaat hetzelfde percentage dood.
 			//debug(Ratio[3]);
 			
@@ -154,11 +159,12 @@ function stackincboog (inc, stack, moraal, muur) {
 			stacktel[1] = stacktel[1] * overleving;
 			stacktel[2] = stacktel[2] * overleving;// Dit zou korter moeten kunnen. 
 
-			if (Ratio >= settings['percentage']) { // de muur zakt minstens 1 level. 
+			if (Ratio[3] >= (settings['Percentage']/100)) { // de muur zakt minstens 1 level. 
 			//debug("muurtje gaat down, muurtje gaat down");
+			
 				if (n==1) {// ja, ik weet dat (n) ook werkt. 
 					
-					return inc * Ratio[3] + 7-(stacktel[0] + stacktel[1] + stacktel[2])/1720000;
+					return  inc * Ratio[3] + 7-(stacktel[0] + stacktel[1] + stacktel[2])/1720000;//* 10/(settings['Percentage']/100);
 //Het grote vraagteken :s  
 			
 				}
@@ -329,7 +335,7 @@ function stackincnone (inc, stack, moraal, muur)	{
 					
 					}
 					
-					if (ratio[0] >= settings['percentage']) {
+					if (ratio[0] >= (settings['Percentage'])/100) {
 					//debug("muurtje gaat down, muurtje gaat down");
 					//debug((inc-i)/5 * Math.round(ratio[0] * max));
 					//debug(ratio[0] * max);
