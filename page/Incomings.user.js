@@ -9,6 +9,7 @@ var doel = {};
     $("#close").click(function() {
         $("#OS_list_popup").hide();
     })
+	
      var world = gd.world.match(/\d+/);
      if (world < 21) {
     $("table#incomings_table .nowrap").each(function() {
@@ -36,18 +37,26 @@ var doel = {};
             }
         }});
         }
-        $("#OutputArea").append("[table][**]Aangevallen dorpen[||]Aantal incomings[||]Aankomsttijd 1e aanval[||]Aantal deff nodig[/**]<br/>");
+        $("#OutputArea").append("[table][**]nummer[**]Aangevallen dorpen[||]Aantal incomings[||]Aankomsttijd 1e aanval[||]Aantal deff nodig[/**]<br/>");
+		var indexlijst = 0;
+		debug("voor zover");
 		for(key in doel) {
-		    if (localStorage['CTstack'] === undefined) {
-			debug("nog geen stacks gebruikt?\nJe kunt bij troepen overzicht de stacks laden, dat gebeurd automatisch");
+		    indexlijst++;
+			if (localStorage['CTstack'] === undefined) {
+			alert("nog geen stacks gebruikt?\nJe kunt bij troepen overzicht de stacks laden, dat gebeurd automatisch");
 			localStorage['CTstack'] = "{}";
 		    }
-		    var StackAllVillages = JSON.parse(localStorage["CTstack"]);
+		    debug("Shitzooi");
+			var StackAllVillages = JSON.parse(localStorage["CTstack"]);
 		    if (world_config.hasArchers) {
-			var OS_stack = stackincboog(doel[key][0], StackAllVillages[key],100);
+			debug("het gaat fout bij de stack.");
+			debug(JSON.stringify(StackAllVillages));
+			debug(key)
+			var OS_stack = stackincboog(doel[key][0], StackAllVillages[key],100,20);
+			debug("kolere");
 		    }
 		    else {
-			var OS_stack = stackincnone(doel[key][0], StackAllVillages[key],100) //[7000,7000,0,7000, 0, 0, 0, 0,0]
+			var OS_stack = stackincnone(doel[key][0], StackAllVillages[key],100,20); //[7000,7000,0,7000, 0, 0, 0, 0,0]
 		    }
 		    doel[key].push(OS_stack)
 var months = { "Jan":1,"Feb":2,"Mar":3,"Apr":4,"May":5,"Jun":6,"Jul":7,"Aug":8,"Sep":9,"Oct":10,"Nov":11,"Dec":12 };
@@ -63,7 +72,8 @@ var months = { "Jan":1,"Feb":2,"Mar":3,"Apr":4,"May":5,"Jun":6,"Jul":7,"Aug":8,"
 			var CT_Month = a.toString().split(" ")[1];
 			doel[key][1] = $.trim(doel[key][1]).replace("morgen", "op "+CT_Day+"."+months[CT_Month]+".")
 		    }
-            $("#OutputArea").append("[*][coord]" + key + "[/coord][|]" + doel[key][0] + "[|]" + $.trim(doel[key][1]) + "[|]" + $.trim(doel[key][2]) +"[/*]" + "<br/>");
+			debug("Bijna!");
+            $("#OutputArea").append("[*]"+ indexlijst + "[*][coord]" + key + "[/coord][|]" + doel[key][0] + "[|]" + $.trim(doel[key][1]) + "[|]" + $.trim(doel[key][2]) +"[/*]" + "<br/>");
         }
         $("#OutputArea").append("[/table]\n\n");
 });

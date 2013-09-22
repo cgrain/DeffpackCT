@@ -5,16 +5,21 @@ else if (game_data.mode == "units") {
 		$("#AllStacks").click(function(){
 			var CT_Stack = {};
 			$("#units_table tr:contains('in het dorp')").each(function(){
-				var temp = /(\d{1,3}\|\d{1,3})/.exec($(this).prev().text())
+				var temp = /(\d{1,3}\|\d{1,3})/.exec($(this).prev().text());
 				var Stack_units = $(this).html().match(/(\d+)\</g);
 				if($("#units_table").find("img[src*='unit_militia.png']").length > 0) {
-					Stack_units.pop() //zonder dit length = 11 (door burgerwacht) in w26, bij incomingsoverzicht daarop controleren, voor boog, ridder enzo
+					Stack_units.pop(); //zonder dit length = 11 (door burgerwacht) in w26, bij incomingsoverzicht daarop controleren, voor boog, ridder enzo
 					//debug(CT_Stack.length);
 				}
-				CT_Stack[temp[1]] = Stack_units
-			})
+				var Stack_units2  = [];
+				$.each(Stack_units, function(i) {
+				Stack_units2[i] = Stack_units[i].match(/\d+/);
+				
+				});
+				CT_Stack[temp[1]] = Stack_units;
+			});
 			localStorage["CTstack"] = JSON.stringify(CT_Stack);
-		})
+		});
 		$("#AttackedVillages").click(function(){
 			var rows = $("tr:contains('in het dorp')", "#units_table");
 			//rows.css( "color", "red" );
@@ -49,6 +54,6 @@ else if (game_data.mode == "units") {
 			
 			});localStorage["CTstack"] = JSON.stringify(stackie);
 			//debug(localStorage["CTstack"]);
-		})
+		});
 	}
 } // einde deel voor troepenoverzicht
