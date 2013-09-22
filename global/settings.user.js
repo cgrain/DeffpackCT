@@ -30,7 +30,7 @@ $("#deffsettings").click(function() {
 	$("#Deffsluiten").click(function(){
 		
 		settings['Stackbeoordeling'] = $("#Deffsettings select:eq(0) option:selected").attr("name");
-		settings['Percentage'] = $('#percentagegetal').val();
+		settings['Percentage'] = parseInt($('#percentagegetal').val(),10);
 		
 		//settings['Offopp']= [0,0,7000,0,0,3000,0,0,300,0,0,0];
 		settings['Offopp'] = [];
