@@ -10,7 +10,7 @@ function ShowAttackID() {
 	$("#IDdesc").click(function(){SortIDs('desc')});
     } else {
 	$("#incomings_table tr").each(function(){
-	    $(this).children(":first").remove();;
+	    $(this).children(":first").remove();
 	})
     }  
 }
