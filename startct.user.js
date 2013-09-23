@@ -12,7 +12,7 @@
 //<!--@@INCLUDE "func\stack.user.js" INDENT=0 //-->
 //<!--@@INCLUDE "func\AttackID.user.js" INDENT=0 //-->
 //<!--@@INCLUDE "func\group.user.js" INDENT=0 //-->
-
+//<!--@@INCLUDE "func\Snipetool.user.js" INDENT=0 //-->
 //Einde Functies
 //<!--@@INCLUDE "page\incomings.user.js" INDENT=0 //-->
 //<!--@@INCLUDE "page\buildings.user.js" INDENT=0 //-->
@@ -20,4 +20,5 @@
 //<!--@@INCLUDE "page\call.user.js" INDENT=0 //-->
 //<!--@@INCLUDE "page\info_command.user.js" INDENT=0 //-->
 //<!--@@INCLUDE "page\overviewvillages.user.js" INDENT=0 //-->
+
 });
